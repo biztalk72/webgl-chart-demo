@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude / Harness runtime state (session-local, not for version control)
+.claude/state/
+.claude/sessions/
