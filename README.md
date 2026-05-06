@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WebGL & Chart Demo
 
-## Getting Started
+Interactive WebGL 3D scenes, 2D/3D data charts, and a live global heatmap globe — all powered by a local multimodal LLM via [Ollama](https://ollama.com).
 
-First, run the development server:
+**Live:** https://webgl.intuaos.com
+
+## Features
+
+| Page | What it does |
+|------|-------------|
+| `/webgl` | Chat-driven 3D scene — describe objects and watch them appear (Three.js + r3f) |
+| `/charts/2d` | Line, bar, pie, scatter charts (Chart.js) |
+| `/charts/3d` | Surface plots, 3D scatter, parametric mesh (Plotly.js) |
+| `/globe` | Spinning Earth with heatmap layers — population, temperature, education, language |
+| `/ai` | Chat and image analysis with a local multimodal LLM |
+
+## Quick Start
 
 ```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start Ollama (required for AI features)
+ollama serve
+ollama pull llama3.2-vision   # or any multimodal model
+
+# 3. Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Globe Heatmap
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The `/globe` page uses live open data — no API keys required:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Layer | Data source |
+|-------|-------------|
+| Population | [REST Countries](https://restcountries.com) |
+| Temperature | [Open-Meteo](https://open-meteo.com) |
+| Education | [World Bank](https://api.worldbank.org) |
+| Language | [REST Countries](https://restcountries.com) |
 
-## Learn More
+Click any country to zoom in and get an AI-generated insight. Type in the chat panel to switch layers with natural language ("show temperature in Asia").
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Next.js 16 · TypeScript · Three.js · three-globe · Chart.js · Plotly.js · Tailwind CSS v4 · Ollama
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Deployed on AWS Amplify with Route 53 DNS. Push to `main` triggers auto-deploy (~4 min).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+git push origin main   # → auto-deploys to https://webgl.intuaos.com
+```
