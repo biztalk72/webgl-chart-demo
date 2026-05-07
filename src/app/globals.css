@@ -1,52 +1,337 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN SYSTEM TOKENS — v1.0.0
+   Source: design.md (First Principles Design)
+   Dark-first: :root holds dark values (app is forced dark).
+   Light class available for future use.
+   ============================================================ */
+
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --card: #111111;
-  --card-hover: #1a1a1a;
-  --border: #262626;
-  --muted: #888888;
-  --accent: #6366f1;
-  --accent-hover: #818cf8;
-  --success: #22c55e;
-  --warning: #eab308;
-  --danger: #ef4444;
+
+  /* ----------------------------------------------------------
+     PRIMITIVE COLOR TOKENS — HSL base, do not use directly
+     ---------------------------------------------------------- */
+
+  --color-gray-50:  hsl(220, 14%, 96%);
+  --color-gray-100: hsl(220, 13%, 91%);
+  --color-gray-200: hsl(220, 12%, 83%);
+  --color-gray-300: hsl(220, 10%, 70%);
+  --color-gray-400: hsl(220,  9%, 58%);
+  --color-gray-500: hsl(220,  8%, 46%);
+  --color-gray-600: hsl(220, 10%, 35%);
+  --color-gray-700: hsl(220, 12%, 26%);
+  --color-gray-800: hsl(220, 14%, 17%);
+  --color-gray-900: hsl(220, 16%, 10%);
+
+  --color-primary-50:  hsl(217, 91%, 96%);
+  --color-primary-100: hsl(217, 89%, 88%);
+  --color-primary-200: hsl(217, 87%, 78%);
+  --color-primary-300: hsl(217, 85%, 65%);
+  --color-primary-400: hsl(217, 83%, 54%);
+  --color-primary-500: hsl(217, 91%, 44%);
+  --color-primary-600: hsl(217, 93%, 37%);
+  --color-primary-700: hsl(217, 95%, 29%);
+  --color-primary-800: hsl(217, 97%, 20%);
+  --color-primary-900: hsl(217, 99%, 13%);
+
+  --color-success-500: hsl(142, 71%, 38%);
+  --color-warning-500: hsl(38,  92%, 50%);
+  --color-error-500:   hsl(0,   84%, 55%);
+  --color-info-500:    hsl(199, 89%, 48%);
+
+  /* ----------------------------------------------------------
+     SEMANTIC TOKENS — dark-first (use these in components)
+     ---------------------------------------------------------- */
+
+  /* Surface */
+  --color-bg-base:    var(--color-gray-900);
+  --color-bg-subtle:  hsl(220, 14%, 11%);
+  --color-bg-muted:   hsl(220, 14%, 14%);
+  --color-bg-overlay: rgba(0, 0, 0, 0.72);
+
+  /* Text */
+  --color-text-primary:   var(--color-gray-50);
+  --color-text-secondary: var(--color-gray-400);
+  --color-text-disabled:  var(--color-gray-600);
+  --color-text-inverse:   var(--color-gray-900);
+  --color-text-link:      var(--color-primary-300);
+
+  /* Border */
+  --color-border-default: hsl(220, 12%, 18%);
+  --color-border-focus:   var(--color-primary-400);
+  --color-border-error:   var(--color-error-500);
+
+  /* Interactive */
+  --color-action-primary:        hsl(239, 84%, 67%);   /* indigo-500 #6366f1 */
+  --color-action-primary-hover:  hsl(239, 82%, 72%);   /* #818cf8 */
+  --color-action-primary-active: hsl(239, 80%, 60%);
+
+  /* Status */
+  --color-status-success: var(--color-success-500);
+  --color-status-warning: var(--color-warning-500);
+  --color-status-error:   var(--color-error-500);
+  --color-status-info:    var(--color-info-500);
+
+  /* ----------------------------------------------------------
+     LEGACY ALIASES — backward compat for existing components
+     ---------------------------------------------------------- */
+  --background:  var(--color-bg-base);
+  --foreground:  var(--color-text-primary);
+  --card:        var(--color-bg-subtle);
+  --card-hover:  var(--color-bg-muted);
+  --border:      var(--color-border-default);
+  --muted:       var(--color-text-secondary);
+  --accent:      var(--color-action-primary);
+  --accent-hover: var(--color-action-primary-hover);
+  --success:     var(--color-status-success);
+  --warning:     var(--color-status-warning);
+  --danger:      var(--color-status-error);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY TOKENS — Major Third scale (×1.25), base 16px
+     ---------------------------------------------------------- */
+
+  --font-display: 'Pretendard Variable', var(--font-geist-sans), 'Apple SD Gothic Neo', sans-serif;
+  --font-body:    'Pretendard Variable', var(--font-geist-sans), 'Apple SD Gothic Neo', sans-serif;
+  --font-code:    'JetBrains Mono', var(--font-geist-mono), 'D2Coding', 'Fira Code', monospace;
+
+  --text-xs:   0.640rem;   /*  10.2px */
+  --text-sm:   0.800rem;   /*  12.8px */
+  --text-base: 1.000rem;   /*  16px   */
+  --text-md:   1.250rem;   /*  20px   */
+  --text-lg:   1.563rem;   /*  25px   */
+  --text-xl:   1.953rem;   /*  31px   */
+  --text-2xl:  2.441rem;   /*  39px   */
+  --text-3xl:  3.052rem;   /*  49px   */
+
+  /* Fluid headings */
+  --text-display: clamp(2rem,    5vw + 1rem, 4rem);
+  --text-h1:      clamp(1.5rem,  3vw + 1rem, 3rem);
+  --text-h2:      clamp(1.25rem, 2vw + 1rem, 2rem);
+
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  --leading-none:    1.0;
+  --leading-tight:   1.2;
+  --leading-snug:    1.375;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   2.0;
+
+  --tracking-tight:   -0.025em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.025em;
+  --tracking-wider:    0.05em;
+  --tracking-widest:   0.1em;
+
+  /* ----------------------------------------------------------
+     SPACING TOKENS — 8px grid (4px base unit)
+     ---------------------------------------------------------- */
+
+  --space-0:   0px;
+  --space-px:  1px;
+  --space-0-5: 2px;
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+
+  /* ----------------------------------------------------------
+     SHADOW TOKENS — Material elevation model
+     ---------------------------------------------------------- */
+
+  --shadow-none:  none;
+  --shadow-sm:    0 1px 2px 0 rgba(0, 0, 0, 0.30);
+  --shadow-md:    0 4px 6px -1px rgba(0, 0, 0, 0.40),
+                  0 2px 4px -2px rgba(0, 0, 0, 0.30);
+  --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.40),
+                  0  4px  6px -4px rgba(0, 0, 0, 0.30);
+  --shadow-xl:    0 20px 25px -5px  rgba(0, 0, 0, 0.40),
+                  0  8px 10px -6px  rgba(0, 0, 0, 0.30);
+  --shadow-2xl:   0 25px 50px -12px rgba(0, 0, 0, 0.60);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.30);
+
+  /* ----------------------------------------------------------
+     MOTION TOKENS — physics-based easing
+     ---------------------------------------------------------- */
+
+  --duration-instant:  50ms;
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    300ms;
+  --duration-slower:  500ms;
+  --duration-slowest: 700ms;
+
+  --ease-linear:  linear;
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ----------------------------------------------------------
+     BORDER RADIUS TOKENS
+     ---------------------------------------------------------- */
+
+  --radius-none: 0px;
+  --radius-sm:   2px;
+  --radius-base: 4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-xl:   12px;
+  --radius-2xl:  16px;
+  --radius-3xl:  24px;
+  --radius-full: 9999px;
+
+  /* ----------------------------------------------------------
+     BREAKPOINTS
+     ---------------------------------------------------------- */
+
+  --screen-sm:  640px;
+  --screen-md:  768px;
+  --screen-lg:  1024px;
+  --screen-xl:  1280px;
+  --screen-2xl: 1536px;
 }
+
+/* Light mode override (app is dark-first; .light class enables this) */
+.light {
+  --color-bg-base:         var(--color-gray-50);
+  --color-bg-subtle:       var(--color-gray-100);
+  --color-bg-muted:        var(--color-gray-200);
+  --color-text-primary:    var(--color-gray-900);
+  --color-text-secondary:  var(--color-gray-600);
+  --color-text-disabled:   var(--color-gray-400);
+  --color-text-link:       var(--color-primary-500);
+  --color-border-default:  var(--color-gray-200);
+  --shadow-sm:  0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.10), 0 2px 4px -2px rgba(0, 0, 0, 0.10);
+}
+
+/* ============================================================
+   TAILWIND v4 @theme inline — maps tokens to utility classes
+   ============================================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-hover: var(--card-hover);
-  --color-border: var(--border);
-  --color-muted: var(--muted);
-  --color-accent: var(--accent);
+  /* Colors — existing utilities (backward compat) */
+  --color-background:  var(--background);
+  --color-foreground:  var(--foreground);
+  --color-card:        var(--card);
+  --color-card-hover:  var(--card-hover);
+  --color-border:      var(--border);
+  --color-muted:       var(--muted);
+  --color-accent:      var(--accent);
   --color-accent-hover: var(--accent-hover);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-success:     var(--success);
+  --color-warning:     var(--warning);
+  --color-danger:      var(--danger);
+
+  /* Colors — design system semantic utilities */
+  --color-bg-base:    var(--color-bg-base);
+  --color-bg-subtle:  var(--color-bg-subtle);
+  --color-bg-muted:   var(--color-bg-muted);
+  --color-text-primary:   var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-disabled:  var(--color-text-disabled);
+  --color-text-link:      var(--color-text-link);
+  --color-border-default: var(--color-border-default);
+  --color-border-focus:   var(--color-border-focus);
+  --color-border-error:   var(--color-border-error);
+  --color-action-primary:        var(--color-action-primary);
+  --color-action-primary-hover:  var(--color-action-primary-hover);
+  --color-action-primary-active: var(--color-action-primary-active);
+  --color-status-success: var(--color-status-success);
+  --color-status-warning: var(--color-status-warning);
+  --color-status-error:   var(--color-status-error);
+  --color-status-info:    var(--color-status-info);
+
+  /* Fonts */
+  --font-sans:    var(--font-display);
+  --font-mono:    var(--font-code);
+  --font-display: var(--font-display);
+  --font-body:    var(--font-body);
+
+  /* Shadows */
+  --shadow-sm:    var(--shadow-sm);
+  --shadow-md:    var(--shadow-md);
+  --shadow-lg:    var(--shadow-lg);
+  --shadow-xl:    var(--shadow-xl);
+  --shadow-2xl:   var(--shadow-2xl);
+  --shadow-inner: var(--shadow-inner);
 }
 
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background:  var(--color-bg-base);
+  color:       var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size:   var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+/* Focus — design system standard */
+:focus-visible {
+  outline:        2px solid var(--color-border-focus);
+  outline-offset: 2px;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-}
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg-base); }
+::-webkit-scrollbar-thumb { background: var(--color-border-default); border-radius: var(--radius-full); }
 
 /* Chart.js dark defaults */
 .chartjs-tooltip {
-  background: var(--card) !important;
-  border: 1px solid var(--border) !important;
+  background: var(--color-bg-subtle) !important;
+  border: 1px solid var(--color-border-default) !important;
+}
+
+/* ============================================================
+   SKELETON LOADING — design.md §8
+   ============================================================ */
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.skeleton {
+  background-color: var(--color-bg-muted);
+  border-radius:    var(--radius-base);
+  animation:        skeleton-pulse 1.5s var(--ease-in-out) infinite;
+}
+
+/* ============================================================
+   ACCESSIBILITY — design.md §4 & §1.6
+   ============================================================ */
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+  }
+}
+
+/* High-contrast mode */
+@media (forced-colors: active) {
+  .btn-primary { border: 2px solid ButtonText; }
 }
